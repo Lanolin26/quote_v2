@@ -1,14 +1,18 @@
 package ru.lanolin.domain;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.Hibernate;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "source_entity")
 public class SourceEntity {
     @Id
@@ -22,4 +26,16 @@ public class SourceEntity {
 
     private String name;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SourceEntity that = (SourceEntity) o;
+        return getId() != null && Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig" newRepositoryParent="org.springframework.data.jpa.repository.JpaRepository">
+    <option name="targetDiffType" value="SNAPSHOT" />
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
+    <option name="targetSnapshotValue" value="$PROJECT_DIR$/quote_backend/src/main/resources/db/migration/postgres/data-model-snapshot.json" />
     <option name="isSnapshotDb" value="false" />
     <option name="snapshotModelValue" value="Default" />
+    <option name="snapshotDirValue" value="$PROJECT_DIR$/quote_backend/src/main/resources/db/migration/postgres" />
     <option name="newEntityIdType" value="UUID" />
     <option name="newEntityIdStrategy" value="Auto" />
   </component>

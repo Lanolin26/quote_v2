@@ -48,7 +48,7 @@ public class QuoteEntityConverter implements EntityToDtoConverter<QuoteEntity, Q
                 getIfNonNull(sourceTypeEntity, SourceTypeEntity::getName),
                 getIfNonNull(source, SourceEntity::getName),
                 getIfNonNull(author, UserEntity::getName),
-                getIfNonNull(author, UserEntity::getIcon),
+                getIfNonNull(author, UserEntity::isIcon),
                 quoteEntity.getText()
         );
     }

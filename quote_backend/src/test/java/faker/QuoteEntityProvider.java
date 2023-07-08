@@ -32,7 +32,7 @@ public class QuoteEntityProvider extends AbstractProvider<QuoteFaker> {
         SourceTypeEntity type = source.getType();
         return new QuoteEntityDto(
                 id(), source.getId(), type.getId(), user.getId(),
-                type.getName(), source.getName(), user.getName(), user.getIcon(),
+                type.getName(), source.getName(), user.getName(), user.isIcon(),
                 text()
         );
     }

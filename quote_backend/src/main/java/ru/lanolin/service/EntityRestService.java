@@ -4,6 +4,7 @@ import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.lanolin.domain.*;
+import ru.lanolin.exceptions.FileOperationException;
 import ru.lanolin.exceptions.NotFoundException;
 import ru.lanolin.repos.*;
 
@@ -55,13 +56,13 @@ public class EntityRestService {
         public QuoteEntity update(UUID id, QuoteEntity toUpdate) {
             QuoteEntity quoteEntity = repository.findById(id).orElseThrow(NotFoundException::new);
 
-            updateIfNonNull(quoteEntity, QuoteEntity::getText, QuoteEntity::setText);
-            updateIfNonNull(quoteEntity, qe -> qe.getSource().getId(), (qe, uuid) -> {
+            updateIfNonNull(quoteEntity, toUpdate, QuoteEntity::getText, QuoteEntity::setText);
+            updateIfNonNull(quoteEntity, toUpdate, qe -> qe.getSource().getId(), (qe, uuid) -> {
                 SourceEntity sourceEntity = sourceEntityService.getOne(uuid)
                         .orElseThrow(() -> new EntityExistsException("Not found source entity type " + uuid));
                 qe.setSource(sourceEntity);
             });
-            updateIfNonNull(quoteEntity, qe -> qe.getAuthor().getId(), (qe, uuid) -> {
+            updateIfNonNull(quoteEntity, toUpdate, qe -> qe.getAuthor().getId(), (qe, uuid) -> {
                 UserEntity userEntity = userEntityService.getOne(uuid)
                         .orElseThrow(() -> new EntityExistsException("Not found user entity type " + uuid));
                 qe.setAuthor(userEntity);
@@ -99,8 +100,8 @@ public class EntityRestService {
         @Override
         public SourceEntity update(UUID id, SourceEntity toUpdate) {
             SourceEntity sourceEntity = repository.findById(id).orElseThrow(NotFoundException::new);
-            updateIfNonNull(sourceEntity, SourceEntity::getName, SourceEntity::setName);
-            updateIfNonNull(sourceEntity, se -> se.getType().getId(), (se, uuid) -> {
+            updateIfNonNull(sourceEntity, toUpdate, SourceEntity::getName, SourceEntity::setName);
+            updateIfNonNull(sourceEntity, toUpdate, se -> se.getType().getId(), (se, uuid) -> {
                 SourceTypeEntity type = sourceTypeEntityService
                         .getOne(uuid)
                         .orElseThrow(() -> new EntityExistsException("Not found entity type " + uuid));
@@ -130,7 +131,7 @@ public class EntityRestService {
         @Override
         public SourceTypeEntity update(UUID id, SourceTypeEntity toUpdate) {
             SourceTypeEntity sourceTypeEntity = repository.findById(id).orElseThrow(NotFoundException::new);
-            if (Objects.nonNull(toUpdate.getName())) sourceTypeEntity.setName(toUpdate.getName());
+            updateIfNonNull(sourceTypeEntity, toUpdate, SourceTypeEntity::getName, SourceTypeEntity::setName);
             return repository.save(sourceTypeEntity);
         }
     }
@@ -138,9 +139,12 @@ public class EntityRestService {
     @Service
     public static class UserEntityRestService extends IEntityRestService<UserEntity, UUID, UserEntityRepository> {
 
+        private final AvatarStorageService avatarStorage;
+
         @Autowired
-        public UserEntityRestService(UserEntityRepository repository) {
+        public UserEntityRestService(UserEntityRepository repository, AvatarStorageService avatarStorage) {
             super(repository);
+            this.avatarStorage = avatarStorage;
         }
 
         @Override
@@ -155,10 +159,18 @@ public class EntityRestService {
         @Override
         public UserEntity update(UUID id, UserEntity toUpdate) {
             UserEntity userEntity = repository.findById(id).orElseThrow(NotFoundException::new);
-            updateIfNonNull(userEntity, UserEntity::getName, UserEntity::setName);
-            updateIfNonNull(userEntity, UserEntity::getIcon, UserEntity::setIcon);
+            updateIfNonNull(userEntity, toUpdate, UserEntity::getName, UserEntity::setName);
+            updateIfNonNull(userEntity, toUpdate, UserEntity::isIcon, UserEntity::setIcon);
             // TODO: copy AuthEntity
             return repository.save(userEntity);
+        }
+
+        @Override
+        public void delete(UUID id) {
+            super.delete(id);
+            try {
+                avatarStorage.deleteIcon(id.toString());
+            } catch (FileOperationException ignored) {}
         }
     }
 
@@ -185,9 +197,9 @@ public class EntityRestService {
         @Override
         public AuthEntity update(UUID id, AuthEntity toUpdate) {
             AuthEntity authEntity = repository.findById(id).orElseThrow(NotFoundException::new);
-            updateIfNonNull(authEntity, AuthEntity::getEmail, AuthEntity::setEmail);
-            updateIfNonNull(authEntity, AuthEntity::getLogin, AuthEntity::setLogin);
-            updateIfNonNull(authEntity, AuthEntity::getPassword, AuthEntity::setPassword);
+            updateIfNonNull(authEntity, toUpdate, AuthEntity::getEmail, AuthEntity::setEmail);
+            updateIfNonNull(authEntity, toUpdate, AuthEntity::getLogin, AuthEntity::setLogin);
+            updateIfNonNull(authEntity, toUpdate, AuthEntity::getPassword, AuthEntity::setPassword);
             return repository.save(authEntity);
         }
     }

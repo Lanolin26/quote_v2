@@ -52,7 +52,7 @@ class UserEntityConverterTest {
         for (int i = 0; i < count_test; i++) {
             UUID id = userEntityProvider.id();
             String name = userEntityProvider.name();
-            String icon = userEntityProvider.icon();
+            boolean icon = userEntityProvider.icon();
 
             UserEntity entity = new UserEntity(id, name, null, icon);
             UserEntityDto dto = new UserEntityDto(id, name, icon);
@@ -72,7 +72,7 @@ class UserEntityConverterTest {
         assertAll(
                 () -> assertEquals(excepted, entity),
                 () -> assertEquals(excepted.getId(), entity.getId()),
-                () -> assertEquals(excepted.getIcon(), entity.getIcon()),
+                () -> assertEquals(excepted.isIcon(), entity.isIcon()),
                 () -> assertEquals(excepted.getName(), entity.getName())
         );
     }

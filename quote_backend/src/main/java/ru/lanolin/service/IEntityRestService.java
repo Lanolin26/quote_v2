@@ -18,8 +18,8 @@ public abstract class IEntityRestService<
         > {
     protected final Repository repository;
 
-    public <T> void updateIfNonNull(Entity inDb, Function<Entity, T> getValue, BiConsumer<Entity, T> updateValue) {
-        T getV = getValue.apply(inDb);
+    public <T> void updateIfNonNull(Entity inDb, Entity updated, Function<Entity, T> getValue, BiConsumer<Entity, T> updateValue) {
+        T getV = getValue.apply(updated);
         if (Objects.nonNull(getV)) {
             updateValue.accept(inDb, getV);
         }
@@ -38,6 +38,7 @@ public abstract class IEntityRestService<
     }
 
     public void delete(Index id) {
+        //TODO: check if contains foreign keys
         repository.deleteById(id);
     }
 

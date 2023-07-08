@@ -1,5 +1,9 @@
 tessdata/
 
+
+avatars/*
+!avatars/00000000-0000-0000-0000-000000000001.png
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

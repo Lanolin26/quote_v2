@@ -8,7 +8,7 @@ import java.util.UUID;
  */
 public record QuoteEntityDto(
         UUID id, UUID sourceId, UUID sourceTypeId,  UUID authorId,
-        String sourceTypeName, String sourceName, String authorName, String authorIcon,
+        String sourceTypeName, String sourceName, String authorName, boolean authorIcon,
         String text
 ) implements Serializable {
 }

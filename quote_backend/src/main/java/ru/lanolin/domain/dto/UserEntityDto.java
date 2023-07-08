@@ -6,5 +6,5 @@ import java.util.UUID;
 /**
  * DTO for {@link ru.lanolin.domain.UserEntity}
  */
-public record UserEntityDto(UUID id, String name, String icon) implements Serializable {
+public record UserEntityDto(UUID id, String name, boolean icon) implements Serializable {
 }

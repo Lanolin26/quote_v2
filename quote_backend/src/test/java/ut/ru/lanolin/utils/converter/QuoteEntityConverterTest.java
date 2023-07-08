@@ -67,7 +67,7 @@ class QuoteEntityConverterTest {
 
             UUID authorId = userEntityProvider.id();
             String authorName = userEntityProvider.name();
-            String authorIcon = userEntityProvider.icon();
+            boolean authorIcon = userEntityProvider.icon();
 
             QuoteEntity entity = new QuoteEntity(
                     quoteId,
@@ -104,7 +104,7 @@ class QuoteEntityConverterTest {
 
                 () -> assertEquals(excepted.getAuthor(), entity.getAuthor()),
                 () -> assertEquals(excepted.getAuthor().getId(), entity.getAuthor().getId()),
-                () -> assertEquals(excepted.getAuthor().getIcon(), entity.getAuthor().getIcon()),
+                () -> assertEquals(excepted.getAuthor().isIcon(), entity.getAuthor().isIcon()),
                 () -> assertEquals(excepted.getAuthor().getName(), entity.getAuthor().getName()),
 
                 () -> assertEquals(excepted.getSource(), entity.getSource()),

@@ -21,6 +21,6 @@ public class UserEntityConverter implements EntityToDtoConverter<UserEntity, Use
 
     @Override
     public UserEntityDto toDTO(UserEntity userEntity) {
-        return new UserEntityDto(userEntity.getId(), userEntity.getName(), userEntity.getIcon());
+        return new UserEntityDto(userEntity.getId(), userEntity.getName(), userEntity.isIcon());
     }
 }

@@ -28,7 +28,7 @@ public class UserEntity {
     @JoinColumn(name = "auth_id")
     private AuthEntity auth;
 
-    private String icon;
+    private boolean icon;
 
     @Override
     public boolean equals(Object o) {

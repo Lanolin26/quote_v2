@@ -30,8 +30,8 @@ public class UserEntityProvider extends AbstractProvider<QuoteFaker> {
         return faker.name().username();
     }
 
-    public String icon() {
-        return faker.file().fileName();
+    public boolean icon() {
+        return faker.bool().bool();
     }
 
 }

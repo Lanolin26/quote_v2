@@ -8,7 +8,6 @@ import ru.lanolin.exceptions.FileOperationException;
 import ru.lanolin.exceptions.NotFoundException;
 import ru.lanolin.repos.*;
 
-import java.util.Objects;
 import java.util.UUID;
 
 public class EntityRestService {

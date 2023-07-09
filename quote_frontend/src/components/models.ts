@@ -1,5 +1,7 @@
 export const ICON_DEFAULT = '00000000-0000-0000-0000-000000000001';
 
+export type OcrLanguage = 'rus' | 'eng';
+
 export interface StatusMessage {
   status?: 'OK' | 'ERROR';
   error?: string;

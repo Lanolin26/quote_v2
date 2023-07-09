@@ -30,6 +30,8 @@ export default defineComponent({
   data(): DataProps {
     return {
       items: [
+        { label: 'View Quote\'s', icon: 'inbox', route: { name: 'QuoteListPage' } },
+        { label: 'Create Quote', icon: 'inbox', route: { name: 'CreateQuotePage' } },
         { label: 'Admin Quote\'s', icon: 'inbox', route: { name: 'AdminIndexPage' } },
       ]
     }

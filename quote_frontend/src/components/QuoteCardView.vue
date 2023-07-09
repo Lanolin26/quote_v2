@@ -63,7 +63,11 @@ export default defineComponent({
       this.copyToClipboards(this.text)
     },
     clickToCopyUrl() {
-      this.copyToClipboards(`${window.location.origin}/quote/${this.id}`)
+      let route = this.$router.resolve({
+        name: 'OneQuotePage',
+        params: { quoteId: this.id},
+      });
+      this.copyToClipboards(`${window.location.origin}/${route.href}`)
     }
   }
 })

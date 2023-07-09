@@ -6,6 +6,7 @@ import { SourceApi } from "src/api/SourceApi";
 import { SourceTypeApi } from "src/api/SourceTypeApi";
 import { UserApi } from "src/api/UserApi";
 import { Apis } from "src/api/AbstractApi";
+import { OcrApi } from "src/api/OcrApi";
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -27,7 +28,8 @@ const api: Apis = {
   quote: new QuoteApi(apiAxios),
   source: new SourceApi(apiAxios),
   sourceType: new SourceTypeApi(apiAxios),
-  user: new UserApi(apiAxios)
+  user: new UserApi(apiAxios),
+  ocr: new OcrApi(apiAxios),
 };
 
 export default boot(({ app }) => {

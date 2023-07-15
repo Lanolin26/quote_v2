@@ -82,7 +82,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <q-card bordered class="text-black q-pa-sm q-ma-sm" style="min-width: 640px">
+  <q-card bordered class="q-pa-sm q-ma-sm" style="min-width: 640px">
     <q-card-section>
       <span class="text-h5">{{ title }}</span>
     </q-card-section>

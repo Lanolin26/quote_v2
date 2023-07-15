@@ -44,6 +44,7 @@ export default defineComponent({
           label: 'quote.fields.id',
           field: 'id',
           align: 'left',
+          style: 'width: 23em',
           sortable: false,
         },
         {
@@ -90,7 +91,7 @@ export default defineComponent({
         .then((res) => {
           this.userElements = res.content;
           this.pagination.rowsNumber = res.totalElements;
-          this.pagination.rowsPerPage = res.numberOfElements;
+          this.pagination.rowsPerPage = props.pagination.rowsPerPage;
           this.pagination.page = res.number + 1;
         })
         .finally(() => {

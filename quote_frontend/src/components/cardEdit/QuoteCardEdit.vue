@@ -30,6 +30,7 @@ export default defineComponent({
     },
     authors: { type: Array as PropType<Array<UserEntity>>, required: true },
     readOnly: { type: Boolean, default: false },
+    loading: { type: Boolean, default: false, required: false },
   },
   emits: ['close', 'delete', 'save', 'update'],
   computed: {
@@ -58,16 +59,21 @@ export default defineComponent({
   },
   data(): DataV {
     return {
-      quoteLocal: {},
+      quoteLocal: { text: '' },
       openDialog: false,
     };
   },
   methods: {
     initEditItem() {
-      this.quoteLocal = this.quote ? this.quote : {};
+      this.quoteLocal = this.quote
+        ? this.quote
+        : {
+            text: '',
+          };
     },
     reset() {
       this.localForm.reset();
+      this.quoteLocal = {};
     },
     save() {
       this.localForm.validate().then((success: boolean) => {
@@ -147,7 +153,7 @@ export default defineComponent({
   <div>
     <q-card
       bordered
-      class="text-black q-pa-sm q-ma-sm"
+      class="relative-position q-pa-sm q-ma-sm"
       style="min-width: 640px"
     >
       <q-card-section>
@@ -164,6 +170,8 @@ export default defineComponent({
             v-model="quoteLocal.id"
             disable
             readonly
+            outlined
+            class="q-mb-md"
           />
           <q-select
             id="sourceType"
@@ -178,9 +186,9 @@ export default defineComponent({
             :option-label="
               (opt) => (Object(opt) === opt && 'name' in opt ? opt.name : '')
             "
-            dense
             map-options
             emit-value
+            outlined
             stack-label
             :rules="[(val) => !!val || 'Field is required']"
           />
@@ -197,10 +205,10 @@ export default defineComponent({
             :option-label="
               (opt) => (Object(opt) === opt && 'name' in opt ? opt.name : '')
             "
-            dense
             map-options
             emit-value
             stack-label
+            outlined
             :rules="[(val) => !!val || 'Field is required']"
           />
           <q-select
@@ -216,12 +224,13 @@ export default defineComponent({
             :option-label="
               (opt) => (Object(opt) === opt && 'name' in opt ? opt.name : '')
             "
-            dense
             map-options
             emit-value
             stack-label
+            outlined
             :rules="[(val) => !!val || 'Field is required']"
           />
+
           <q-input
             id="text"
             label="Text"
@@ -233,18 +242,30 @@ export default defineComponent({
             :rules="[(val) => (!!val && val !== '') || 'Field is required']"
             clearable
             autogrow
-            dense
             counter
             outlined
           >
             <template v-slot:after>
-              <q-btn
-                round
-                dense
-                flat
-                icon="language"
-                @click="openDialog = true"
-              />
+              <div class="column q-mt-md">
+                <div class="col">
+                  <q-btn
+                    round
+                    dense
+                    flat
+                    icon="language"
+                    @click="openDialog = true"
+                  />
+                </div>
+                <div class="col">
+                  <q-btn
+                    round
+                    dense
+                    flat
+                    icon="format_color_reset"
+                    @click="cleanNextLine"
+                  />
+                </div>
+              </div>
             </template>
           </q-input>
         </q-form>
@@ -258,16 +279,7 @@ export default defineComponent({
           color="positive"
           @click="save"
         />
-        <q-btn
-          v-if="isEdit && !isView"
-          @click="cleanNextLine"
-          :label="'quote.edit.clear'"
-        />
-        <q-btn
-          v-if="isEdit && !isView"
-          @click="reset"
-          label="Reset"
-        />
+        <q-btn v-if="isEdit && !isView" @click="reset" label="Reset" />
         <q-btn
           v-if="isDelete && !isView"
           label="Delete"
@@ -284,17 +296,13 @@ export default defineComponent({
           class="q-ml-sm"
           @click="close"
         />
-        <q-space />
-        <q-btn v-if="isView && isEdit" round icon="edit" @click="clickToEdit" />
-        <q-btn
-          v-if="isView"
-          round
-          icon="content_copy"
-          @click="clickToCopyText"
-        />
-        <q-btn v-if="isView" round icon="link" @click="clickToCopyUrl" />
       </q-card-actions>
     </q-card>
+
+    <q-inner-loading size="32px" :showing="loading">
+      <q-spinner-gears size="50px" color="primary" />
+    </q-inner-loading>
+
     <q-dialog v-model="openDialog">
       <ocr-card v-model="quoteLocal.text" @close="openDialog = false" />
     </q-dialog>

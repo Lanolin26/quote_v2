@@ -65,6 +65,7 @@ export default defineComponent({
       :authors="authorEntities"
       :source-types="sourceTypeEntities"
       :sources="sourceEntities"
+      :loading="$q.loadingBar.isActive"
       @save="saveDialogElement"
     />
   </div>

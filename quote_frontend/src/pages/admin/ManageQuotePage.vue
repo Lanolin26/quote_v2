@@ -52,6 +52,7 @@ export default defineComponent({
           label: 'quote.fields.id',
           field: 'id',
           align: 'left',
+          style: 'width: 23em',
           sortable: false,
         },
         {
@@ -136,7 +137,7 @@ export default defineComponent({
         .then((res) => {
           this.quoteEntities = res.content;
           this.pagination.rowsNumber = res.totalElements;
-          this.pagination.rowsPerPage = res.numberOfElements;
+          this.pagination.rowsPerPage = props.pagination.rowsPerPage;
           this.pagination.page = res.number + 1;
         })
         .finally(() => (this.loading = false));
@@ -271,13 +272,13 @@ export default defineComponent({
 
       <template v-slot:body-cell-source="props">
         <q-td :props="props">
-          <q-chip size="sm">{{ props.value }}</q-chip>
+          <q-chip outline size="sm">{{ props.value }}</q-chip>
         </q-td>
       </template>
 
       <template v-slot:body-cell-sourceType="props">
         <q-td :props="props">
-          <q-chip size="sm">{{ props.value }}</q-chip>
+          <q-chip outline size="sm">{{ props.value }}</q-chip>
         </q-td>
       </template>
 
@@ -346,7 +347,7 @@ export default defineComponent({
         />
       </template>
     </q-table>
-    <q-dialog v-model="openDialog">
+    <q-dialog v-model="openDialog" full-width>
       <quote-card-edit
         :is-edit="editDialog"
         :is-delete="deleteDialog"

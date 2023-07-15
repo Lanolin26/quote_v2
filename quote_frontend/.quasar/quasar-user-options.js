@@ -12,9 +12,9 @@
 
 
 
-import {Dialog,Loading,LoadingBar,LocalStorage,SessionStorage,Notify} from 'quasar'
+import {ClosePopup,Dialog,Loading,LoadingBar,LocalStorage,SessionStorage,Notify} from 'quasar'
 
 
 
-export default { config: {},plugins: {Dialog,Loading,LoadingBar,LocalStorage,SessionStorage,Notify} }
+export default { config: {"dark":{}},directives: {ClosePopup},plugins: {Dialog,Loading,LoadingBar,LocalStorage,SessionStorage,Notify} }
 

@@ -32,6 +32,7 @@ export default defineComponent({
       items: [
         { label: 'View Quote\'s', icon: 'inbox', route: { name: 'QuoteListPage' } },
         { label: 'Create Quote', icon: 'inbox', route: { name: 'CreateQuotePage' } },
+        // { label: 'Edit Quote', icon: 'inbox', route: { name: 'EditQuotePage' } },
         { label: 'Admin Quote\'s', icon: 'inbox', route: { name: 'AdminIndexPage' } },
       ]
     }

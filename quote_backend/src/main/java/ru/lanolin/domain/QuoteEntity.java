@@ -3,6 +3,7 @@ package ru.lanolin.domain;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -17,7 +18,11 @@ import java.util.UUID;
 public class QuoteEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.UUID, generator = "uuid_v7_gen")
+    @GenericGenerator(
+            name = "uuid_v7_gen",
+            type = ru.lanolin.config.UUIDv7Generator.class
+    )
     @Column(name = "id", nullable = false)
     private UUID id;
 

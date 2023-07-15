@@ -85,9 +85,9 @@ public class EntityRestService {
 
         @Override
         public SourceEntity create(SourceEntity toCreate) {
-            if (repository.existsByNameIgnoreCase(toCreate.getName())) {
-                throw new EntityExistsException("Entity exits by name " + toCreate.getName());
-            }
+//            if (repository.existsByNameIgnoreCase(toCreate.getName())) {
+//                throw new EntityExistsException("Entity exits by name " + toCreate.getName());
+//            }
             UUID sourceTypeId = toCreate.getType().getId();
             if (!sourceTypeEntityService.existById(sourceTypeId)) {
                 throw new EntityExistsException("Source Type Entity doesn't exits: " + sourceTypeId);
